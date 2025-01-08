@@ -18,7 +18,7 @@ garantindo um aprendizado mais fluido e eficaz.
 Uma equação do tipo $ax = b$, que expressa a variável $b$ em função da  variável $x$ e da constante $a$, é chamada de **equação linear**. O termo *linear* é 
 utilizado porque o gráfico dessa equação é uma linha reta, conforme ilustrado a seguir.
 
-<iframe src="imgs/plot.html" width="100%" height="510px" frameborder="0"></iframe>
+<iframe src="https://github.com/Fogarolli/JB-PesquisaOperacional/blob/main/imgs/plot.html" width="100%" height="510px" frameborder="0"></iframe>
 
 
 Da mesma forma, a equação
@@ -227,7 +227,7 @@ Os exemlos apresentados sugerem que um sistemas linear pode ter **uma única sol
 
 --- 
 
-<iframe src="imgs/grafico_sistemas_lineares.html" width="100%" height="510px" frameborder="0"></iframe>
+<iframe src="https://github.com/Fogarolli/JB-PesquisaOperacional/blob/main/imgs/grafico_sistemas_lineares.html" width="100%" height="510px" frameborder="0"></iframe>
 
 ---
 
