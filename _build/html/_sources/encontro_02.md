@@ -1,0 +1,21 @@
+# Pesquisa Operacional
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
