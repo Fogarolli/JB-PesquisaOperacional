@@ -53,11 +53,6 @@ Este aviso indica algo crítico que pode comprometer seu entendimento ou levar a
 Quando houver referências externas ou materiais complementares, este destaque chamará sua atenção para recursos adicionais que podem enriquecer seu aprendizado.
 ```
 
-```{admonition} Aviso.
-:class: warning
-Este destaque alerta para possíveis dificuldades ou pontos de atenção que podem impactar seu progresso. Fique atento às instruções aqui apresentadas.
-```
-
 ```{admonition} Exemplos!
 :class: examples
 Sempre que precisar de um exemplo prático para ilustrar um conceito, este destaque será usado. Ele ajudará a entender melhor a aplicação dos conteúdos abordados.
