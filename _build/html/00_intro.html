@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c1f7c500" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=50ce0d86" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -61,9 +61,12 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '00_intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Equações Lineares e Matrizes" href="01_algebra_linear.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -169,7 +172,14 @@
                 </a>
             </li>
         </ul>
-        
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="01_algebra_linear.html">Equações Lineares e Matrizes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_sistemas_lineares.html">Sistemas Lineares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_matrizes.html">Matrizes</a></li>
+</ul>
+</details></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -429,10 +439,6 @@
 <p class="admonition-title">Veja também!</p>
 <p>Quando houver referências externas ou materiais complementares, este destaque chamará sua atenção para recursos adicionais que podem enriquecer seu aprendizado.</p>
 </div>
-<div class="warning admonition">
-<p class="admonition-title">Aviso.</p>
-<p>Este destaque alerta para possíveis dificuldades ou pontos de atenção que podem impactar seu progresso. Fique atento às instruções aqui apresentadas.</p>
-</div>
 <div class="examples admonition">
 <p class="admonition-title">Exemplos!</p>
 <p>Sempre que precisar de um exemplo prático para ilustrar um conceito, este destaque será usado. Ele ajudará a entender melhor a aplicação dos conteúdos abordados.</p>
@@ -462,6 +468,8 @@
 </div>
 </div>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -494,6 +502,15 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="right-next"
+       href="01_algebra_linear.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Equações Lineares e Matrizes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

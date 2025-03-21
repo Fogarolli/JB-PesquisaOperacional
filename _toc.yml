@@ -3,6 +3,9 @@
 
 format: jb-book
 root: 00_intro
-#chapters:
-#  - file: 01_algebra_linear
+chapters:
+  - file: 01_algebra_linear
+    sections:
+    - file: 01_sistemas_lineares
+    - file: 01_matrizes
 #  - file: 02_introducao_po

@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sistemas Lineares &#8212; Pesquisa Operacional</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=50ce0d86" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '01_sistemas_lineares';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Matrizes" href="01_matrizes.html" />
+    <link rel="prev" title="Equações Lineares e Matrizes" href="01_algebra_linear.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="00_intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pesquisa Operacional - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Pesquisa Operacional - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_intro.html">
+                    Bem-vindos(as) ao curso de Pesquisa Operacional!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_algebra_linear.html">Equações Lineares e Matrizes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Sistemas Lineares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_matrizes.html">Matrizes</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F01_sistemas_lineares.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/01_sistemas_lineares.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Sistemas Lineares</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-de-eliminacao">Método de Eliminação</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="sistemas-lineares">
+<h1>Sistemas Lineares<a class="headerlink" href="#sistemas-lineares" title="Link to this heading">#</a></h1>
+<p>Uma equação do tipo <span class="math notranslate nohighlight">\(ax = b\)</span>, que expressa a variável <span class="math notranslate nohighlight">\(b\)</span> em função da  variável <span class="math notranslate nohighlight">\(x\)</span> e da constante <span class="math notranslate nohighlight">\(a\)</span>, é chamada de <strong>equação linear</strong>. O termo <em>linear</em> é
+utilizado porque o gráfico dessa equação é uma linha reta, conforme ilustrado a seguir.</p>
+<p><img alt="Relação Linear: Gráficos de b = ax" src="_images/graficos_lineares.png" /></p>
+<p>Da mesma forma, a equação</p>
+<div class="math notranslate nohighlight" id="equation-eq01">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq01" title="Link to this equation">#</a></span>\[a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b,\]</div>
+<p>que expressa a variável <span class="math notranslate nohighlight">\(b\)</span> em função das variáveis <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span>, <span class="math notranslate nohighlight">\(x_n\)</span> e das constantes conhecidas <span class="math notranslate nohighlight">\(a_1\)</span>, <span class="math notranslate nohighlight">\(a_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span>, <span class="math notranslate nohighlight">\(a_n\)</span> é chamada de equação
+linear. Em diversos cenários, fornecemos <span class="math notranslate nohighlight">\(b\)</span> e as constantes <span class="math notranslate nohighlight">\(a_1\)</span>, <span class="math notranslate nohighlight">\(a_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span>, <span class="math notranslate nohighlight">\(a_n\)</span> e devemos encontrar os números <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span> , <span class="math notranslate nohighlight">\(x_n\)</span> chamados
+<strong>incógnitas</strong>, que satisfazem a equação.</p>
+<p>Uma solução de uma equação linear <a class="reference internal" href="#equation-eq01">(1)</a> é uma sequência de <span class="math notranslate nohighlight">\(n\)</span> números <span class="math notranslate nohighlight">\(s_1\)</span>, <span class="math notranslate nohighlight">\(s_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span>, <span class="math notranslate nohighlight">\(s_n\)</span> que têm como propriedade satisfazer a expressão
+<a class="reference internal" href="#equation-eq01">(1)</a> quando <span class="math notranslate nohighlight">\(x_1 = s_2\)</span>, <span class="math notranslate nohighlight">\(x_2 = s_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span> , <span class="math notranslate nohighlight">\(x_n = s_n\)</span> são substituídas nessa expressão. Então, <span class="math notranslate nohighlight">\(x_1 = 4\)</span>, <span class="math notranslate nohighlight">\(x_2 = -1\)</span> e <span class="math notranslate nohighlight">\(x_3 = 2\)</span> é uma solução
+para a equação linear:</p>
+<div class="math notranslate nohighlight">
+\[
+2x_1 - 3x_2 + 4x_3 = 19,
+\]</div>
+<p>pois</p>
+<div class="math notranslate nohighlight">
+\[
+2(4)- 3(-1) + 4(2) = 19.
+\]</div>
+<p>Um sistema de <strong><span class="math notranslate nohighlight">\(m\)</span> equações lineares a <span class="math notranslate nohighlight">\(n\)</span> incógnitas <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span> , <span class="math notranslate nohighlight">\(x_n\)</span></strong> ou simplesmente um <strong>sistema linear</strong>, é um conjunto de <span class="math notranslate nohighlight">\(m\)</span> equações lineares,
+cada uma com <span class="math notranslate nohighlight">\(n\)</span> incógnitas.</p>
+<div class="math notranslate nohighlight" id="equation-eq02">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq02" title="Link to this equation">#</a></span>\[\begin{split}\begin{matrix}
+a_{11}x_{1} &amp; + &amp; a_{12}x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{1n}x_{n} &amp; = &amp; b_{1} \\
+a_{21}x_{1} &amp; + &amp; a_{22}x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{2n}x_{n} &amp; = &amp; b_{2} \\
+\vdots      &amp;   &amp; \vdots      &amp;   &amp;        &amp;   &amp; \vdots      &amp;   &amp; \vdots  \\
+a_{m1}x_{1} &amp; + &amp; a_{m2}x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{mn}x_{n} &amp; = &amp; b_{m} \\
+\end{matrix}\end{split}\]</div>
+<p>Uma <strong>solução</strong> de um sistema linear é uma sequência de <span class="math notranslate nohighlight">\(n\)</span> números <span class="math notranslate nohighlight">\(s_1\)</span>, <span class="math notranslate nohighlight">\(s_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span>, <span class="math notranslate nohighlight">\(s_n\)</span> que têm como propriedade o fato de satisfazer cada equação do
+sistema quando <span class="math notranslate nohighlight">\(x_1 = s_1\)</span>, <span class="math notranslate nohighlight">\(x_2 = s_2\)</span>, <span class="math notranslate nohighlight">\(\cdots\)</span> , <span class="math notranslate nohighlight">\(x_n = s_n\)</span> são substituídos na expressão. Para resolver um sistema linear, utilizamos uma técnica conhecida
+como <strong>método da eliminação</strong>.</p>
+<section id="metodo-de-eliminacao">
+<h2>Método de Eliminação<a class="headerlink" href="#metodo-de-eliminacao" title="Link to this heading">#</a></h2>
+<p>O método de eliminação é uma técnica utilizada para resolver sistemas lineares. O objetivo principal do método é simplificar o sistema até que as soluções possam ser facilmente determinadas, eliminando variáveis gradualmente.</p>
+<div class="danger admonition">
+<p class="admonition-title">O método de eliminação pode ser resumido nos seguintes passos:</p>
+<ol class="arabic simple">
+<li><p>Trocar a posição de duas equações.</p></li>
+<li><p>Multiplicar uma equação por uma constante diferente de zero.</p></li>
+<li><p>Adicionar um múltiplo de uma equação à outra.</p></li>
+</ol>
+</div>
+<p>O método da eliminação produz outro sistema linear que tem exatamente as mesmas soluções do sistema dado. O novo sistema linear pode, então, ser resolvido facilmente.</p>
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.1</p>
+<p>O diretor de uma empresa de açaí da região amazônica tem R$100.000,00 para investir. Como estratégia, ele decidiu diversificar o investimento entre dois tipos de
+aplicação: compra de equipamentos para processamento de açaí (com retorno estimado de 5% ao ano) e ações de uma cooperativa de produtores da região (com retorno
+estimado de 9% ao ano). O objetivo do diretor é obter um retorno total de R$7.800,00 ao ano com esses investimentos.</p>
+<p>Definindo <strong>x</strong> como o valor investido em equipamentos e <strong>y</strong> como o valor investido nas ações da cooperativa, temos as seguintes condições:</p>
+<ol class="arabic simple">
+<li><p>O total investido deve ser R$100.000,00:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+  x + y = 100.000
+  \]</div>
+<ol class="arabic simple" start="2">
+<li><p>O retorno total esperado deve ser R$7.800,00:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+  0,05x + 0,09y = 7.800
+  \]</div>
+<p>Assim, formamos o seguinte sistema linear:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{matrix}
+  x     &amp; + &amp; y     &amp; = &amp; 100.000 \\ 
+  0,05x &amp; + &amp; 0,09y &amp; = &amp; 7.800 
+  \end{matrix} 
+  \end{split}\]</div>
+<p>Para resolver o sistema, realizamos uma manipulação algébrica que gera um <strong>sistema equivalente</strong>.
+Multiplicamos a primeira equação por <strong><span class="math notranslate nohighlight">\(-0,05\)</span></strong> e somamos à segunda, eliminando a variável <strong>x</strong>. Isso gera o seguinte sistema equivalente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{matrix}
+  x     &amp; + &amp; y     &amp; = &amp; 100.000 \\ 
+        &amp;   &amp; 0,04y &amp; = &amp; 2.800 
+  \end{matrix} 
+  \end{split}\]</div>
+<p>A partir da nova equação gerada (<span class="math notranslate nohighlight">\(0,04y =  2.800\)</span>), isolamos <strong>y</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+  y = 70.000
+  \]</div>
+<p>Substituímos o valor de <strong>y</strong> na primeira equação:</p>
+<div class="math notranslate nohighlight">
+\[
+  x + 70.000 = 100.000
+  \]</div>
+<div class="math notranslate nohighlight">
+\[
+  x = 30.000
+  \]</div>
+<p>Com isso, o diretor deve investir R$30.000 em equipamentos e R$70.000 nas ações da cooperativa para atingir o retorno esperado de R$7.800 ao ano.
+Esses valores satisfazem ambas as equações do sistema linear, garantindo o sucesso da estratégia de investimento.</p>
+</div>
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.2</p>
+<p>Considera o sistema linear</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+x - 3y = -7 \\
+2x - 6y = 7 
+\end{align}\end{split}\]</div>
+<p>Decidimos novamente eliminar <span class="math notranslate nohighlight">\(x\)</span>. Adicionamos (-2) vezes a primeira equação à segunda, obtendo</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+x - 3y = -7 \\
+0x + 0y = 21 
+\end{align}\end{split}\]</div>
+<p>onde a segunda equação não tem sentido. Isto significa que o sistema linear nao tem solução. Poderíamos chegar à mesma conclusão observando que o lado esquerdo da segunda equação é igual ao dobro do lado esquerdo da primeira equação, mas o lado direito da segunda equação não é igual ao dobro do lado direito da primeira equação.</p>
+</div>
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.3</p>
+<p>Considere o sistema linear</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+x + 2y - 3z &amp;= -4 \\
+2x + y - 3z &amp;= 4 
+\end{align}\end{split}\]</div>
+<p>Para eliminar a variável <strong>x</strong>, multiplicamos a primeira equação por <strong>-2</strong> e somamos à segunda equação. Essa manipulação gera um <strong>sistema equivalente</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{matrix}
+  x     &amp; + &amp; 2y &amp; - &amp; 3z &amp; = &amp; -4 \\ 
+        &amp; - &amp; 3y &amp; + &amp; 3z &amp; = &amp; 12 
+  \end{matrix} 
+  \end{split}\]</div>
+<p>A partir da equação gerada (<span class="math notranslate nohighlight">\(-3y + 3z = 12\)</span>), isolamos <strong>y</strong> em função de <strong>z</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+  y = z - 4
+  \]</div>
+<p>Substituímos <strong>y</strong> na primeira equação para determinar <strong>x</strong> em função de <strong>z</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+  x + 2(z - 4) - 3z = -4
+  \]</div>
+<div class="math notranslate nohighlight">
+\[
+  x = z + 4
+  \]</div>
+<p>Assim, uma solução geral para o sistema é dada por:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  x = r + 4, \\ y = r - 4, \\ z = r
+  \end{split}\]</div>
+<p>Onde <strong>r</strong> é um número real arbitrário. Isso significa que o sistema tem <strong>infinitas soluções</strong>, dependendo do valor atribuído a <strong>r</strong>.</p>
+<ul>
+<li><p>Se <strong>r = 1</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    x = 5, \\ y = -3, \\ z = 1
+    \end{split}\]</div>
+</li>
+<li><p>Se <strong>r = -2</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    x = 2, \\ y = -6, \\ z = -2
+    \end{split}\]</div>
+</li>
+</ul>
+<p>Cada valor de <strong>r</strong> gera uma solução válida.</p>
+</div>
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota</p>
+<p>Os exemlos apresentados sugerem que um sistemas linear pode ter <strong>uma única solução</strong>, <strong>nenhuma solução</strong>, ou <strong>infinitas soluções</strong>.</p>
+</div>
+<p><img alt="tipos de Soluções dos Sistemas Lineares" src="_images/grafico_sistemas_lineares.png" /></p>
+<ol class="arabic simple">
+<li><p>O sistema tem uma única solução; ou seja, as retas azul e vermelha se cruzam exatamente em um ponto.</p></li>
+<li><p>O sistema não tem solução; ou seja, as relas azul e vermelha não se cruzam.</p></li>
+<li><p>O sistema tem infinitas soluções, ou seja, as retas azul e vermelha são coincidentes.</p></li>
+</ol>
+<div class="exercise admonition">
+<p class="admonition-title">Exercício 1.1</p>
+<p>Resolva os sistemas lineares dado utilizando o método da eliminação.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{ccc}
+  \begin{aligned}
+    \text{(a)} \quad x + 2y + 3z = 6 \\ 2x - 3y + 2z = 14 \\ 3x + y - z = -2
+  \end{aligned} \quad \quad \quad 
+  \begin{aligned}
+    \text{(b)} \quad  x + 2y = 10 \\ 2x - 2y = -4 \\ 3x + 5y = 26
+  \end{aligned} \quad \quad \quad 
+  \begin{aligned}
+    \text{(c)} \quad  x + 2y = 10 \\ 2x - 2y = -4 \\ 3x + 5y = 20
+  \end{aligned}
+\end{array}
+\end{split}\]</div>
+</div>
+<div class="exercise admonition">
+<p class="admonition-title">Exercício 1.2 - Planejamento de Produção</p>
+<p>Um fabricante produz três tipos diferentes de produtos químicos: A, B e C. Cada produto deve passar por duas máquinas de processamento: X e Y. Neste processo, cada uma das máquinas é utilizada durante os seguintes intervalos de tempo:</p>
+<ol class="arabic simple">
+<li><p>Uma tonelada de A necessita 2 horas na máquina X e 2 horas na máquina Y.</p></li>
+<li><p>Uma tonelada de B necessita 3 horas na máquina X e 2 horas na máquina Y.</p></li>
+<li><p>Uma tonelada de C necessita 4 horas na máquina X e 3 horas na máquina Y.</p></li>
+</ol>
+<p>A máquina X está disponível 80 horas por semana e a máquina Y 60 horas por semana. Como a administração não quer manter as dispendiosas máquinas X e Y paradas, ela gostaria de saber quantas toneladas de cada produto devem ser produzidas para que as máquinas sejam utilizadas de maneira ótima. Admite-se que o fabricante possa vender tantos produtos quanto produz.</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_algebra_linear.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Equações Lineares e Matrizes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="01_matrizes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Matrizes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-de-eliminacao">Método de Eliminação</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rafael Fogarolli Vieira
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
