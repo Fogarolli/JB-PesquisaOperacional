@@ -1,0 +1,1286 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Example 01 &#8212; Pesquisa Operacional</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6743d8de" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'section_01/examples';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../00_intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Pesquisa Operacional - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Pesquisa Operacional - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../00_intro.html">
+                    Bem-vindos(as) ao curso de Pesquisa Operacional!
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="topic_1.0.html">Equações Lineares e Matrizes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="topic_1.1.html">Sistemas Lineares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic_1.2.html">Matrizes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic_1.3.html">Produto Escalar e Multiplicação de Matrizes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic_1.6.html">Eliminação de Gauss-Jordan</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsection_01/examples.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/section_01/examples.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Example 01</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Example 01</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-02">Example 02</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-03">Example 03</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-04">Example 04</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-05">Example 05</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-06">Example 06</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-07">Example 07</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-08">Example 08</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-09">Example 09</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-10">Example 10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-11">Example 11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-12">Example 12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-13">Example 13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-14">Example 14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-15">Example 15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-16">Example 16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-17">Example 17</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-18">Example 18</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-19">Example 19</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-20">Example 20</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-21">Example 21</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-22">Example 22</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-23">Example 23</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-24">Example 24</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-25">Example 25</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="example-01">
+<h1>Example 01<a class="headerlink" href="#example-01" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.1 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.1</p>
+<p>O diretor de uma empresa de açaí da região amazônica tem R$100.000,00 para investir. Como estratégia, ele decidiu diversificar o investimento entre dois tipos de aplicação: compra de equipamentos para processamento de açaí (com retorno estimado de 5% ao ano) e ações de uma cooperativa de produtores da região (com retorno estimado de 9% ao ano). O objetivo do diretor é obter um retorno total de R$7.800,00 ao ano com esses investimentos.</p>
+<p>Definindo <span class="math notranslate nohighlight">\({x}\)</span> como o valor investido em equipamentos e <span class="math notranslate nohighlight">\({x}\)</span> como o valor investido nas ações da cooperativa, temos as seguintes condições:</p>
+<ol class="arabic simple">
+<li><p>O total investido deve ser R$100.000,00:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+x + y = 100.000
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>O retorno total esperado deve ser R$7.800,00:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+0,05x + 0,09y = 7.800
+\]</div>
+<p>Assim, formamos o seguinte sistema linear:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+x     &amp; + &amp; y     &amp; = &amp; 100.000 \\ 
+0,05x &amp; + &amp; 0,09y &amp; = &amp; 7.800 
+\end{matrix} 
+\end{split}\]</div>
+<p>Para resolver o sistema, realizamos uma manipulação algébrica que gera um <strong>sistema equivalente</strong>. Multiplicamos a primeira equação por <span class="math notranslate nohighlight">\({-0,05}\)</span> e somamos à segunda, eliminando a variável <span class="math notranslate nohighlight">\({x}\)</span>. Isso gera o seguinte sistema equivalente:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+x     &amp; + &amp; y     &amp; = &amp; 100.000 \\ 
+      &amp;   &amp; 0,04y &amp; = &amp; 2.800 
+\end{matrix} 
+\end{split}\]</div>
+<p>A partir da nova equação gerada (<span class="math notranslate nohighlight">\(0,04y =  2.800\)</span>), isolamos <span class="math notranslate nohighlight">\({y}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+y = 70.000
+\]</div>
+<p>Substituímos o valor de <span class="math notranslate nohighlight">\({y}\)</span> na primeira equação:</p>
+<div class="math notranslate nohighlight">
+\[
+x + 70.000 = 100.000
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+x = 30.000
+\]</div>
+<p>Com isso, o diretor deve investir R$30.000 em equipamentos e R$70.000 nas ações da cooperativa para atingir o retorno esperado de R$7.800 ao ano. Esses valores satisfazem ambas as equações do sistema linear, garantindo o sucesso da estratégia de investimento.</p>
+</div>
+<!-- End Exemple 1.1 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-02">
+<h1>Example 02<a class="headerlink" href="#example-02" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.2 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.2</p>
+<p>Considera o sistema linear</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \begin{align}
+    x - 3y = -7 \\
+    2x - 6y = 7 
+  \end{align}\end{split}\]</div>
+<p>Decidimos novamente eliminar <span class="math notranslate nohighlight">\({x}\)</span>. Adicionamos <span class="math notranslate nohighlight">\({(-2)}\)</span> vezes a primeira equação à segunda, obtendo</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \begin{align}
+    x - 3y = -7 \\
+    0x + 0y = 21 
+  \end{align}\end{split}\]</div>
+<p>onde a segunda equação não tem sentido. Isto significa que o sistema linear nao tem solução. Poderíamos chegar à mesma conclusão observando que o lado esquerdo da segunda equação é igual ao dobro do lado esquerdo da primeira equação, mas o lado direito da segunda equação não é igual ao dobro do lado direito da primeira equação.</p>
+</div>
+<!-- End Exemple 1.2 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-03">
+<h1>Example 03<a class="headerlink" href="#example-03" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.3 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.3</p>
+<p>Considere o sistema linear</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \begin{align}
+    x + 2y - 3z &amp;= -4 \\
+    2x + y - 3z &amp;= 4 
+  \end{align}\end{split}\]</div>
+<p>Para eliminar a variável <span class="math notranslate nohighlight">\({x}\)</span>, multiplicamos a primeira equação por <span class="math notranslate nohighlight">\({(-2)}\)</span> e somamos à segunda equação. Essa manipulação gera um <strong>sistema equivalente</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{matrix}
+    x     &amp; + &amp; 2y &amp; - &amp; 3z &amp; = &amp; -4 \\ 
+          &amp; - &amp; 3y &amp; + &amp; 3z &amp; = &amp; 12 
+  \end{matrix} 
+\end{split}\]</div>
+<p>A partir da equação gerada (<span class="math notranslate nohighlight">\(-3y + 3z = 12\)</span>), isolamos <span class="math notranslate nohighlight">\({y}\)</span> em função de <span class="math notranslate nohighlight">\({z}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+  y = z - 4
+\]</div>
+<p>Substituímos <span class="math notranslate nohighlight">\({y}\)</span> na primeira equação para determinar <span class="math notranslate nohighlight">\({x}\)</span> em função de <span class="math notranslate nohighlight">\({z}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+  x + 2(z - 4) - 3z = -4
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+  x = z + 4
+\]</div>
+<p>Assim, uma solução geral para o sistema é dada por:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  x = r + 4, \\ y = r - 4, \\ z = r
+\end{split}\]</div>
+<p>Onde <span class="math notranslate nohighlight">\({r}\)</span> é um número real arbitrário. Isso significa que o sistema tem <strong>infinitas soluções</strong>, dependendo do valor atribuído a <span class="math notranslate nohighlight">\({r}\)</span>.</p>
+<ul class="simple">
+<li><p>Se <span class="math notranslate nohighlight">\({r = 1}\)</span>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  x = 5, \\ y = -3, \\ z = 1
+\end{split}\]</div>
+<ul class="simple">
+<li><p>Se <span class="math notranslate nohighlight">\({r = -2}\)</span>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  x = 2, \\ y = -6, \\ z = -2
+\end{split}\]</div>
+<p>Cada valor de <span class="math notranslate nohighlight">\({r}\)</span> gera uma solução válida.</p>
+</div>
+<!-- End Exemple 1.3 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-04">
+<h1>Example 04<a class="headerlink" href="#example-04" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.4 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.4</p>
+<p>Sejam</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; -1 &amp; 0 \end{bmatrix}, \quad \quad
+  B = \begin{bmatrix} 4 \\ -3 \end{bmatrix}, \quad \quad
+  C = \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  D = \begin{bmatrix} 2 &amp; 0 \\ -1 &amp; 9 \end{bmatrix}, \quad \quad
+  E = \begin{bmatrix} 3 \end{bmatrix}, \quad \quad
+  F = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 2 \end{bmatrix}
+\end{split}\]</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Análises</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\({A}\)</span> é uma matriz <span class="math notranslate nohighlight">\({2 \times 3}\)</span> com <span class="math notranslate nohighlight">\({a_{11} = 1}\)</span>, <span class="math notranslate nohighlight">\({a_{12} = 2}\)</span>, <span class="math notranslate nohighlight">\({a_{13} = 3}\)</span>, <span class="math notranslate nohighlight">\({a_{21} = 0}\)</span>, <span class="math notranslate nohighlight">\({a_{22} = -1}\)</span>, <span class="math notranslate nohighlight">\({a_{23} = 0}\)</span>.</p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\({B}\)</span> é uma matriz <span class="math notranslate nohighlight">\({2 \times 1}\)</span>, com <span class="math notranslate nohighlight">\({b_{11} = 4}\)</span>, <span class="math notranslate nohighlight">\({b_{21} = -3}\)</span>.</p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\({C}\)</span> é uma matriz <span class="math notranslate nohighlight">\({2 \times 1}\)</span>, com <span class="math notranslate nohighlight">\({c_{11} = 1}\)</span>, <span class="math notranslate nohighlight">\({c_{21} = 2}\)</span>.</p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\({D}\)</span> é uma matriz <span class="math notranslate nohighlight">\({2 \times 2}\)</span>, com <span class="math notranslate nohighlight">\({d_{11} = 2}\)</span>, <span class="math notranslate nohighlight">\({d_{12} = 0}\)</span>, <span class="math notranslate nohighlight">\({d_{21} = -1}\)</span>, <span class="math notranslate nohighlight">\({d_{22} = 9}\)</span>.</p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\({E}\)</span> é uma matriz <span class="math notranslate nohighlight">\({1 \times 1}\)</span>, com <span class="math notranslate nohighlight">\({e_{11} = 3}\)</span>.</p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\({F}\)</span> é uma matriz <span class="math notranslate nohighlight">\({2 \times 2}\)</span>, em que os elementos <span class="math notranslate nohighlight">\({f_{11} = 1}\)</span> e <span class="math notranslate nohighlight">\({f_{22} = 2}\)</span> formam a diagonal principal.</p></li>
+</ul>
+</div>
+</details></div>
+<!-- End Exemple 1.4 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-05">
+<h1>Example 05<a class="headerlink" href="#example-05" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.5 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.5</p>
+<p>Considere o sistema linear:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{aligned}
+    x + 2y &amp;= 10 \\
+    2x + 2y &amp;= 4 \\
+    3x + 5y &amp;= 26
+  \end{aligned}
+\end{split}\]</div>
+<p>Ao qual podemos associar as seguintes matrizes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix} 1 &amp; 2 \\ 2 &amp; 2 \\ 3 &amp; 5 \end{bmatrix}, \quad
+  x = \begin{bmatrix} x \\ y \end{bmatrix}, \quad
+  b = \begin{bmatrix} 10 \\ 4 \\ 26 \end{bmatrix}
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.5 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-06">
+<h1>Example 06<a class="headerlink" href="#example-06" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.6 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.6</p>
+<p>São matrizes diagonais:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} 
+  G = \begin{bmatrix} 4 &amp; 0 \\ 0 &amp; 9 \end{bmatrix} \quad e \quad
+  H = \begin{bmatrix} -3 &amp; 0 &amp; 0 \\ 0 &amp; -2 &amp; 0 \\ 0 &amp; 0 &amp; 4 \end{bmatrix}
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.6 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-07">
+<h1>Example 07<a class="headerlink" href="#example-07" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.7 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.7</p>
+<p>São matrizes escalares:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} 
+  G = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix} \quad e \quad
+  H = \begin{bmatrix} -3 &amp; 0 \\ 0 &amp; -3 \end{bmatrix}
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.7 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-08">
+<h1>Example 08<a class="headerlink" href="#example-08" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.8 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.8</p>
+<p>As matrizes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix} 1 &amp; 2 &amp; -1 \\ 2 &amp; -3 &amp; 4 \\ 0 &amp; -4 &amp; 5 \end{bmatrix} \quad \text{e} \quad
+  B = \begin{bmatrix} 1 &amp; 2 &amp; w \\ 2 &amp; x &amp; 4 \\ y &amp; -4 &amp; z
+  \end{bmatrix}
+\end{split}\]</div>
+<p>são iguais se <span class="math notranslate nohighlight">\({w = -1}\)</span>, <span class="math notranslate nohighlight">\({x = -3}\)</span>, <span class="math notranslate nohighlight">\({y = 0}\)</span> e <span class="math notranslate nohighlight">\({z = 5}\)</span>.</p>
+</div>
+<!-- End Exemple 1.8 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-09">
+<h1>Example 09<a class="headerlink" href="#example-09" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.9 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.9</p>
+<p>Sejam</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix} 1 &amp; -2 &amp; 4 \\ 2 &amp; -1 &amp; 3 \end{bmatrix} \quad \text{e} \quad
+  B = \begin{bmatrix} 0 &amp; 2 &amp; -4 \\ 1 &amp; 3 &amp; 1 \end{bmatrix}
+\end{split}\]</div>
+<p>Então,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A + B = \begin{bmatrix} 1 + 0 &amp; -2 + 2 &amp; 4 + (-4) \\ 2 + 1 &amp; -1 + 3 &amp; 3 + 1 \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 3 &amp; 2 &amp; 4 \end{bmatrix}.
+\end{split}\]</div>
+<p>Deve-se notar que a soma das matrizes <span class="math notranslate nohighlight">\({A}\)</span> e <span class="math notranslate nohighlight">\({B}\)</span> é definida somente quando <span class="math notranslate nohighlight">\({A}\)</span> e <span class="math notranslate nohighlight">\({B}\)</span> têm o mesmo número de linhas e de colunas, isto é, apenas quando <span class="math notranslate nohighlight">\({A}\)</span> e <span class="math notranslate nohighlight">\({B}\)</span> são do mesmo tamanho.</p>
+</div>
+<!-- End Exemple 1.9 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-10">
+<h1>Example 10<a class="headerlink" href="#example-10" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.10 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.10</p>
+<p>Sejam</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix} 2 &amp; 3 &amp; -5 \\ 4 &amp; 2 &amp; 1 \end{bmatrix} \quad \text{e} \quad 
+  B = \begin{bmatrix} 2 &amp; -1 &amp; 3 \\ 3 &amp; 5 &amp; -2 \end{bmatrix}.
+\end{split}\]</div>
+<p>Então,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A - B = \begin{bmatrix} 2 - 2 &amp; 3 + 1 &amp; -5 - 3 \\ 4 - 3 &amp; 2 - 5 &amp; 1 + 2 \end{bmatrix} = 
+  \begin{bmatrix} 0 &amp; 4 &amp; -8 \\ 1 &amp; -3 &amp; 3 \end{bmatrix} 
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.10 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-11">
+<h1>Example 11<a class="headerlink" href="#example-11" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.11 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.11</p>
+<p>Sejam</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix} 4 &amp; -2 &amp; 3 \\ 0 &amp; 5 &amp; -2 \end{bmatrix}, \quad 
+  B = \begin{bmatrix} 6 &amp; 2 &amp; 4 \\ 0 &amp; 4 &amp; 3 \end{bmatrix},
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C = \begin{bmatrix} 5 &amp; -3 &amp; 2 \\ 4 &amp; 2 &amp; -3 \end{bmatrix}, \quad 
+  D = \begin{bmatrix} 3 &amp; -5 &amp; 1 \end{bmatrix}, \quad 
+  E^T = \begin{bmatrix} 2 \\ -1 \\ 3 \end{bmatrix}.
+\end{split}\]</div>
+<p>Então,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A^T = \begin{bmatrix} 4 &amp; 0 \\ -2 &amp; 5 \\ 3 &amp; -2 \end{bmatrix}, \quad 
+  B^T = \begin{bmatrix} 6 &amp; 0 \\ 2 &amp; 4 \\ 4 &amp; 3 \end{bmatrix},
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C^T = \begin{bmatrix} 5 &amp; 4 \\ -3 &amp; 2 \\ 2 &amp; -3 \end{bmatrix}, \quad 
+  D^T = \begin{bmatrix} 3 \\ -5 \\ 1 \end{bmatrix}, \quad 
+  E^T = \begin{bmatrix} 2 &amp; -1 &amp; 3 \end{bmatrix}.
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.11 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-12">
+<h1>Example 12<a class="headerlink" href="#example-12" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.12 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.12</p>
+<p>O produto escalar de: <span class="math notranslate nohighlight">\({u}\)</span> <span class="math notranslate nohighlight">\(= \begin{bmatrix} 1 \\ 2 \\ 3 \\ 4 \end{bmatrix}\)</span> e <span class="math notranslate nohighlight">\({v}\)</span> <span class="math notranslate nohighlight">\( = \begin{bmatrix} 2 \\ 3 \\ -2 \\ 1 \end{bmatrix}\)</span> é:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{u} \cdot \mathbf{v} = (1)(2) + (2)(3) + (3)(-2) + (4)(1) = -6.\]</div>
+</div>
+<!-- End Exemple 1.12 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-13">
+<h1>Example 13<a class="headerlink" href="#example-13" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.13 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplo 1.13</p>
+<p>Sejam <span class="math notranslate nohighlight">\({a}\)</span> <span class="math notranslate nohighlight">\( = [x \;\; 2 \;\; 3]\)</span> e <span class="math notranslate nohighlight">\({b}\)</span> <span class="math notranslate nohighlight">\( = \begin{bmatrix} 4 \\ 1 \\ 2 \end{bmatrix}\)</span>.<br />
+Se <span class="math notranslate nohighlight">\({a}\)</span>  <span class="math notranslate nohighlight">\({\cdot}\)</span> <span class="math notranslate nohighlight">\({b} = -4\)</span>, encontre <span class="math notranslate nohighlight">\({x}\)</span>.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Solução</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{a} \cdot \mathbf{b} = 4x + 2 + 6 = -4 \\
+4x + 8 = -4 \\
+x = -3.
+\end{split}\]</div>
+</div>
+</details></div>
+<!-- End Exemple 1.13 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-14">
+<h1>Example 14<a class="headerlink" href="#example-14" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.14 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.14</p>
+<p>Sejam <span class="math notranslate nohighlight">\(A = \begin{bmatrix} 1 &amp; 2 &amp; -1 \\ 3 &amp; 1 &amp; 4 \end{bmatrix} \quad \text{e} \quad B = \begin{bmatrix} -2 &amp; 5 \\ 4 &amp; -3 \\ 2 &amp; 1 \end{bmatrix}.\)</span> Então,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B = \begin{bmatrix}
+    (1)(-2) + (2)(4) + (-1)(2) &amp; (1)(5) + (2)(-3) + (-1)(1) \\
+    (3)(-2) + (1)(4) + (4)(2) &amp; (3)(5) + (1)(-3) + (4)(1)
+  \end{bmatrix} 
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B = \begin{bmatrix}
+    -2 + 8 - 2 &amp; 5 - 6 - 1 \\
+    -6 + 4 + 8 &amp; 15 - 3 + 4
+  \end{bmatrix} 
+  = \begin{bmatrix} 
+    4 &amp; -2 \\
+    6 &amp; 16
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.14 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-15">
+<h1>Example 15<a class="headerlink" href="#example-15" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.15 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.15</p>
+<p>O sistema linear</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{aligned}
+    x + 2y - z &amp;= 2 \\
+    3x \quad\;\;\; + 4z &amp;= 5
+  \end{aligned}
+\end{split}\]</div>
+<p>pode ser escrito (verifique) utilizando-se o produto matricial a seguir:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{bmatrix}
+    1 &amp; 2 &amp; -1 \\
+    3 &amp; 0 &amp;  4
+  \end{bmatrix}
+  \begin{bmatrix}
+    x \\
+    y \\
+    z
+  \end{bmatrix}
+    =
+  \begin{bmatrix}
+    2 \\
+    5
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.15 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-16">
+<h1>Example 16<a class="headerlink" href="#example-16" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.16 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.16</p>
+<p>Considere o sistema linear:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{aligned}
+    -2x + z &amp;= 5 \\
+    2x + 3y - 4z &amp;= 7 \\
+    3x + 2y + 2z &amp;= 3
+  \end{aligned}
+\end{split}\]</div>
+<p>Sendo</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    -2 &amp; 0 &amp; 1 \\
+    2 &amp; 3 &amp; -4 \\
+    3 &amp; 2 &amp; 2
+  \end{bmatrix},
+    \quad
+  x = \begin{bmatrix}
+    x \\
+    y \\
+    z
+  \end{bmatrix},
+    \quad
+  b = \begin{bmatrix}
+    5 \\
+    7 \\
+    3
+  \end{bmatrix},
+\end{split}\]</div>
+<p>podemos escrever o sistema linear dado na forma de matriz da seguinte maneira:</p>
+<div class="math notranslate nohighlight">
+\[
+  Ax = b.
+\]</div>
+<p>A matriz de coeficientes é <span class="math notranslate nohighlight">\(A\)</span> e a matriz aumentada é:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+  \begin{array}{ccc|c}
+    -2 &amp; 0 &amp; 1 &amp; 5 \\
+    2 &amp; 3 &amp; -4 &amp; 7 \\
+    3 &amp; 2 &amp; 2 &amp; 3
+  \end{array}
+\right]
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.16 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-17">
+<h1>Example 17<a class="headerlink" href="#example-17" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.17 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.17</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  F =  \begin{bmatrix} 1 &amp; 2 &amp; 2 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix} \quad
+  G =  \begin{bmatrix} 0 &amp; 2 &amp; -2 &amp; 4 \\ 0 &amp; 0 &amp; 3 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix} \quad
+  H = \begin{bmatrix} 1 &amp; 5 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  I = \begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix} \quad
+  J = \begin{bmatrix} 5 &amp; 7 &amp; 9 \\ 1 &amp; -2 &amp; 3 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}
+\end{split}\]</div>
+</div>
+<!-- End Exemple 1.17 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-18">
+<h1>Example 18<a class="headerlink" href="#example-18" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.18 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.18</p>
+<p>Seja</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    1 &amp; 2 &amp; 4 &amp; 3 \\
+    2 &amp; 1 &amp; 3 &amp; 2 \\
+    1 &amp; -2 &amp; 2 &amp; 3
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Se adicionamos 2 vezes a linha 3 de <span class="math notranslate nohighlight">\(A\)</span> à segunda linha de <span class="math notranslate nohighlight">\(A\)</span>, obtemos:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B = \begin{bmatrix}
+    1 &amp; 2 &amp; 4 &amp; 3 \\
+    4 &amp; -3 &amp; 7 &amp; 8 \\
+    1 &amp; -2 &amp; 2 &amp; 3
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Portanto, <span class="math notranslate nohighlight">\(B\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>.<br />
+Permutando as linhas 2 e 3, obtemos:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C = \begin{bmatrix}
+    1 &amp; 2 &amp; 4 &amp; 3 \\
+    1 &amp; -2 &amp; 2 &amp; 3 \\
+    4 &amp; -3 &amp; 7 &amp; 8
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Portanto, <span class="math notranslate nohighlight">\(C\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(B\)</span> e também é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>.<br />
+Multiplicando a linha 1 de <span class="math notranslate nohighlight">\(C\)</span> por 2, obtemos:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  D = \begin{bmatrix}
+    2 &amp; 4 &amp; 8 &amp; 6 \\
+    1 &amp; -2 &amp; 2 &amp; 3 \\
+    4 &amp; -3 &amp; 7 &amp; 8
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Portanto, <span class="math notranslate nohighlight">\(D\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(C\)</span>.<br />
+Segue-se, então, que <span class="math notranslate nohighlight">\(D\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>, uma vez que obtivemos <span class="math notranslate nohighlight">\(D\)</span> aplicando três operações elementares sucessivas nas linhas de <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</div>
+<!-- End Exemple 1.18 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-19">
+<h1>Example 19<a class="headerlink" href="#example-19" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1.19 -->
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.19</p>
+<p>Seja</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    0 &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    2 &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    2 &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p>O procedimento para a transformação de uma matriz para a forma escalonada por linhas está descrito a seguir.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 01</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Encontre a primeira coluna (da esquerda para a direita) não-nula de <span class="math notranslate nohighlight">\(A\)</span>. Esta coluna é chamada <strong>coluna do pivô</strong>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    \color{red}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    \color{red}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{red}{2} &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    \color{red}{2} &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 02</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique o primeiro elemento não-nulo (de cima para baixo) na coluna do pivô. Este elemento é chamado <strong>pivô</strong>, destacado em azul em <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A_{1} = \begin{bmatrix}
+    \color{red}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    \color{red}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{blue}{2} &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    \color{red}{2} &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 03</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Permute, se necessário, a primeira linha com a linha onde está o pivô de modo que o pivô esteja agora na primeira linha. Chame a nova matriz de <span class="math notranslate nohighlight">\(A_1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    \color{blue}{2} &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    \color{red}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{red}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\    
+    \color{red}{2} &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira e terceira linhas de <span class="math notranslate nohighlight">\(A\)</span> foram permutadas.</strong></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 04</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Multiplique a primeira linha de <span class="math notranslate nohighlight">\(A_1\)</span> pelo inverso do pivô. Dessa maneira, o elemento na primeira linha e coluna do pivô (onde o pivô está localizado) é agora igual a 1. Chame a nova matriz de <span class="math notranslate nohighlight">\(A_2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A_{2} = \begin{bmatrix}
+    \color{red}{1} &amp; \color{red}{1} &amp; \color{red}{-\frac{5}{2}} &amp; \color{red}{1} &amp; \color{red}{2} \\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    2 &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira linha de <span class="math notranslate nohighlight">\(A_1\)</span> foi multiplicada por <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>.</strong></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 05</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Adicione múltiplos apropriados da primeira linha de <span class="math notranslate nohighlight">\(A_2\)</span> a todas as outras linhas para tornar todos os elementos da coluna do pivô, com exceção do elemento onde o pivô está localizado, iguais a zero. Dessa maneira, todos os elementos na coluna do pivô e linhas <span class="math notranslate nohighlight">\(2, 3, \dots, m\)</span> são iguais a zero. Chame a nova matriz de <span class="math notranslate nohighlight">\(A_3\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A_{3} = \begin{bmatrix}
+    1 &amp; 1 &amp; -\frac{5}{2} &amp; 1 &amp; 2 \\
+    \color{blue}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{blue}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    \color{red}{0} &amp; \color{red}{-2} &amp; \color{red}{-1} &amp; \color{red}{7} &amp; \color{red}{3} \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong><span class="math notranslate nohighlight">\(-2\)</span> vezes a primeira linha de <span class="math notranslate nohighlight">\(A_2\)</span> foi adicionada à sua quarta linha.</strong></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 06</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique <span class="math notranslate nohighlight">\(B\)</span> como a submatriz <span class="math notranslate nohighlight">\((m - 1) \times n\)</span> de <span class="math notranslate nohighlight">\(A_3\)</span>, obtida retirando-se a primeira linha de <span class="math notranslate nohighlight">\(A_3\)</span>. Repita os Passos 1 até 5 em <span class="math notranslate nohighlight">\(B\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    0 &amp; \color{red}{0} &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; \color{blue}{2} &amp; 3 &amp; -4 &amp; 1\\
+    0 &amp; \color{red}{-2} &amp; -1 &amp; 7 &amp; 3 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira e segunda linhas de <span class="math notranslate nohighlight">\(B\)</span> foram permutadas.</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B_{1} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    0 &amp; \color{blue}{2} &amp; 3 &amp; -4 &amp; 1\\
+    0 &amp; \color{red}{0} &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; \color{red}{-2} &amp; -1 &amp; 7 &amp; 3 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira linha de <span class="math notranslate nohighlight">\(B_{1}\)</span> foi multiplicada por <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span></strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B_{2} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{red}{0} &amp; \color{blue}{1} &amp; \color{red}{\frac{3}{2}} &amp; \color{red}{-2} &amp; \color{red}{\frac{1}{2}}\\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; -2 &amp; -1 &amp; 7 &amp; 3 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong><span class="math notranslate nohighlight">\(2\)</span> vezes a primeira linha de <span class="math notranslate nohighlight">\(B_{2}\)</span> foi adicionada à sua terceira linha</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B_{3} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    0 &amp; 1 &amp; \frac{3}{2} &amp; -2 &amp; \frac{1}{2}\\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{2} &amp; \color{red}{3} &amp; \color{red}{4} \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 07</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique <span class="math notranslate nohighlight">\(C\)</span> como a submatriz <span class="math notranslate nohighlight">\((m - 2) \times n\)</span> de <span class="math notranslate nohighlight">\(B_3\)</span>, obtida retirando-se a primeira linha de <span class="math notranslate nohighlight">\(B_3\)</span>. Repita os Passos 1 até 5 em <span class="math notranslate nohighlight">\(C\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    0 &amp; 0 &amp; \color{blue}{2} &amp; 3 &amp; 4 \\    
+    0 &amp; 0 &amp; \color{red}{2} &amp; 3 &amp; 4 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira linha de <span class="math notranslate nohighlight">\(C\)</span> foi multiplicada por <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span></strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C_{1} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{1} &amp; \color{red}{\frac{3}{2}} &amp; \color{red}{2} \\    
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong><span class="math notranslate nohighlight">\((-2)\)</span> vezes a primeira linha de <span class="math notranslate nohighlight">\(C1\)</span> foi adiciona à sua segunda linha.</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C_{2} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    0 &amp; 0 &amp; 1 &amp; \frac{3}{2} &amp; 2 \\    
+    \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{0} \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 08</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique <span class="math notranslate nohighlight">\(D\)</span> como a submatriz <span class="math notranslate nohighlight">\((m - 3) \times n\)</span> de <span class="math notranslate nohighlight">\(C_2\)</span>, obtida retirando-se a primeira linha de <span class="math notranslate nohighlight">\(C_2\)</span>. Tentamos repetir os Passos de 1 até 5 em <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  D = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    \color{lightgray}{0} &amp; \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{2} \\    
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text">Entretanto, como não há linha do pivô em <span class="math notranslate nohighlight">\(D\)</span>, concluímos o processo. A matriz, representada por <span class="math notranslate nohighlight">\(H\)</span>, abrange <span class="math notranslate nohighlight">\(D\)</span> e as linhas em cinza acima de <span class="math notranslate nohighlight">\(D\)</span>, na forma escalonada por linhas.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  H = \begin{bmatrix}
+    1 &amp; 1 &amp; -\frac{5}{2} &amp; 1 &amp; 2 \\
+    0 &amp; 1 &amp; \frac{3}{2} &amp; -2 &amp; \frac{1}{2}\\
+    0 &amp; 0 &amp; 1 &amp; \frac{3}{2} &amp; 2 \\    
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Dica!</p>
+<p>Quando estivermos realizando os cálculos, muitas vezes é possível evitar frações modificando de maneira apropriada os passos do procedimento.</p>
+</div>
+</div>
+<!-- End Exemple 1.19 -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-20">
+<h1>Example 20<a class="headerlink" href="#example-20" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1. -->
+<!-- End Exemple 1. -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-21">
+<h1>Example 21<a class="headerlink" href="#example-21" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1. -->
+<!-- End Exemple 1. -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-22">
+<h1>Example 22<a class="headerlink" href="#example-22" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1. -->
+<!-- End Exemple 1. -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-23">
+<h1>Example 23<a class="headerlink" href="#example-23" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1. -->
+<!-- End Exemple 1. -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-24">
+<h1>Example 24<a class="headerlink" href="#example-24" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1. -->
+<!-- End Exemple 1. -->
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="example-25">
+<h1>Example 25<a class="headerlink" href="#example-25" title="Link to this heading">#</a></h1>
+<!-- Start Exemple 1. -->
+<!-- End Exemple 1. -->
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./section_01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Example 01</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-02">Example 02</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-03">Example 03</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-04">Example 04</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-05">Example 05</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-06">Example 06</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-07">Example 07</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-08">Example 08</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-09">Example 09</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-10">Example 10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-11">Example 11</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-12">Example 12</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-13">Example 13</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-14">Example 14</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-15">Example 15</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-16">Example 16</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-17">Example 17</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-18">Example 18</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-19">Example 19</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-20">Example 20</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-21">Example 21</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-22">Example 22</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-23">Example 23</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-24">Example 24</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-25">Example 25</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rafael Fogarolli Vieira
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

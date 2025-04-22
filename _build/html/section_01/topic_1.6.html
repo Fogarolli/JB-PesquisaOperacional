@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Eliminação de Gauss-Jordan &#8212; Pesquisa Operacional</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6743d8de" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'section_01/topic_1.6';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Produto Escalar e Multiplicação de Matrizes" href="topic_1.3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../00_intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Pesquisa Operacional - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Pesquisa Operacional - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../00_intro.html">
+                    Bem-vindos(as) ao curso de Pesquisa Operacional!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="topic_1.0.html">Equações Lineares e Matrizes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="topic_1.1.html">Sistemas Lineares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic_1.2.html">Matrizes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic_1.3.html">Produto Escalar e Multiplicação de Matrizes</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Eliminação de Gauss-Jordan</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsection_01/topic_1.6.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/section_01/topic_1.6.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Eliminação de Gauss-Jordan</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-escalonada-reduzida-por-linhas">Forma Escalonada Reduzida por Linhas</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eliminacao-de-gauss-jordan">
+<h1>Eliminação de Gauss-Jordan<a class="headerlink" href="#eliminacao-de-gauss-jordan" title="Link to this heading">#</a></h1>
+<p>Nesta seção, vamos organizar o processo de eliminação utilizado na resolução de sistemas lineares, como discutido anteriormente. O objetivo é desenvolver um método prático e eficiente para encontrar soluções desses sistemas. Esse método começa com a <strong>matriz aumentada</strong> associada ao sistema linear e aplica transformações que a convertem em uma forma mais simples. Essa nova forma mantém as mesmas soluções do sistema original, mas facilita significativamente o processo de resolução. Por exemplo, considere a seguinte matriz aumentada:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \left[
+        \begin{array}{cccc|c}
+            1 &amp; 0 &amp; 0 &amp; 2 &amp; 4 \\
+            0 &amp; 1 &amp; 0 &amp; -1 &amp; -5 \\
+            0 &amp; 0 &amp; 1 &amp; 3 &amp; 6
+        \end{array}
+    \right]
+\end{split}\]</div>
+<p>Essa matriz corresponde ao seguinte sistema de equações:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{aligned}
+        x_1 + 2x_4 &amp; = 4 \\
+        x_2 - x_4 &amp; = -5 \\
+        x_3 + 3x_4 &amp; = 6
+    \end{aligned}
+\end{split}\]</div>
+<p>Como as equações já estão isoladas nas variáveis <span class="math notranslate nohighlight">\(\color{red}{x_1}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{x_2}\)</span> e <span class="math notranslate nohighlight">\(\color{red}{x_3}\)</span>, é fácil encontrar suas soluções em função de <span class="math notranslate nohighlight">\(\color{red}{x_4}\)</span>. O principal objetivo desta seção é aprender a manipular qualquer matriz aumentada até atingir uma forma semelhante a essa, na qual as soluções possam ser encontradas de maneira simples e direta.</p>
+<section id="forma-escalonada-reduzida-por-linhas">
+<h2>Forma Escalonada Reduzida por Linhas<a class="headerlink" href="#forma-escalonada-reduzida-por-linhas" title="Link to this heading">#</a></h2>
+<p>Uma matriz <span class="math notranslate nohighlight">\(\color{red}{m \times n}\)</span> está na <strong>forma escalonada reduzida por linhas</strong> se ela satisfaz as seguintes propriedades:</p>
+<ul class="simple">
+<li><p><strong>(a)</strong> Todas as linhas nulas, se existirem, ocorrem abaixo de todas as linhas não-nulas.</p></li>
+<li><p><strong>(b)</strong> O primeiro elemento diferente de zero à partir da esquerda de uma linha diferente de zero é um 1. Este elemento é chamado de <strong>um inicial</strong> desta linha.</p></li>
+<li><p><strong>(c)</strong> Para cada linha diferente de zero, um inicial aparece à direita dos uns iniciais das linhas precedentes.</p></li>
+<li><p><strong>(d)</strong> Se uma coluna contém um inicial, então todos os outros elementos naquela coluna são iguais a zero.</p></li>
+</ul>
+<p>Em uma matriz na <strong>forma escalonada reduzida por linhas</strong>, os primeiros coeficientes das linhas não-nulas formam uma escada. Uma matriz <span class="math notranslate nohighlight">\(\color{red}{m \times n}\)</span> que satisfaz as propriedades (a), (b) e (c) está na <strong>forma escalonada por linhas</strong>. As matrizes a seguir estão na <strong>forma escalonada por linhas</strong>:</p>
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.17</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  F =  \begin{bmatrix} 1 &amp; 2 &amp; 2 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix} \quad
+  G =  \begin{bmatrix} 0 &amp; 2 &amp; -2 &amp; 4 \\ 0 &amp; 0 &amp; 3 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix} \quad
+  H = \begin{bmatrix} 1 &amp; 5 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  I = \begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix} \quad
+  J = \begin{bmatrix} 5 &amp; 7 &amp; 9 \\ 1 &amp; -2 &amp; 3 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}
+\end{split}\]</div>
+</div>
+<p>Agora que já entendemos o que caracteriza uma matriz na <strong>forma escalonada reduzida por linhas</strong>, vamos avançar e aprender <strong>como transformar qualquer matriz em sua forma escalonada por linhas</strong>. A partir dessa forma intermediária, será possível alcançar a forma reduzida com alguns passos adicionais.</p>
+<p>Esse processo é essencial para resolver sistemas lineares de maneira organizada e eficiente, utilizando um conjunto de procedimentos bem definidos. Para isso, utilizaremos as chamadas <strong>operações elementares nas linhas</strong> de uma matriz <span class="math notranslate nohighlight">\(\color{red}{A = [a_{ij}], \, m \times n}\)</span>, que podem ser de três tipos:</p>
+<ul class="simple">
+<li><p><strong>(a)</strong> <strong>Permutação</strong> de duas linhas de <span class="math notranslate nohighlight">\(\color{red}{A}\)</span>. Ou seja, substitua <span class="math notranslate nohighlight">\(\color{red}{a_{r1}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{r2}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{\ldots}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{rn}}\)</span> por <span class="math notranslate nohighlight">\(\color{red}{a_{s1}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{s2}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{\ldots}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{sn}}\)</span> e vice-versa, onde <span class="math notranslate nohighlight">\(\color{red}{r \neq s}\)</span>.</p></li>
+<li><p><strong>(b)</strong> <strong>Multiplicação</strong> de uma linha de <span class="math notranslate nohighlight">\(\color{red}{A}\)</span> por um número constante diferente de zero <span class="math notranslate nohighlight">\(\color{red}{c}\)</span>. Ou seja, substitua <span class="math notranslate nohighlight">\(\color{red}{a_{r1}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{r2}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{\ldots}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{rn}}\)</span> por <span class="math notranslate nohighlight">\(\color{red}{ca_{r1}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{ca_{r2}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{\ldots}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{ca_{rn}}\)</span>.</p></li>
+<li><p><strong>(c)</strong> <strong>Adição</strong> de um múltiplo de uma linha a outra linha. Ou seja, substitua a linha <span class="math notranslate nohighlight">\(\color{red}{r}\)</span> por ela mesma somada a <span class="math notranslate nohighlight">\(\color{red}{d}\)</span> vezes a linha <span class="math notranslate nohighlight">\(\color{red}{s}\)</span>, com <span class="math notranslate nohighlight">\(\color{red}{r \neq s}\)</span>: <span class="math notranslate nohighlight">\(\color{red}{a_{r1}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{r2}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{\ldots}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{rn}}\)</span> por <span class="math notranslate nohighlight">\(\color{red}{a_{r1}}\)</span> <span class="math notranslate nohighlight">\(\color{red}{+  \; da_{s1}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{a_{r2}}\)</span> <span class="math notranslate nohighlight">\(\color{red}{+ \; da_{s2}}\)</span>, <span class="math notranslate nohighlight">\(\color{red}{\ldots}\)</span>,<span class="math notranslate nohighlight">\(\color{red}{ a_{rn}}\)</span> <span class="math notranslate nohighlight">\(\color{red}{+  \; da_{sn}}\)</span>.</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">Atenção!</p>
+<p>Quando uma matriz é vista como a matriz aumentada de um sistema linear, essas operações correspondem a operações válidas feitas nas equações do sistema:</p>
+<ul class="simple">
+<li><p>permutar equações,</p></li>
+<li><p>multiplicar uma equação por uma constante não nula,</p></li>
+<li><p>somar um múltiplo de uma equação a outra.</p></li>
+</ul>
+<p>Essas operações <strong>não alteram as soluções do sistema</strong>.</p>
+</div>
+<p>Uma matriz <span class="math notranslate nohighlight">\(\color{red}{A \, m \times n}\)</span> é <strong>equivalente por linhas</strong> a uma matriz <span class="math notranslate nohighlight">\(\color{red}{B \, m \times n}\)</span> se <span class="math notranslate nohighlight">\(\color{red}{B}\)</span> pode ser obtida aplicando-se uma sequência finita de operações elementares nas linhas da matriz <span class="math notranslate nohighlight">\(\color{red}{A}\)</span>.</p>
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.18</p>
+<p>Seja</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    1 &amp; 2 &amp; 4 &amp; 3 \\
+    2 &amp; 1 &amp; 3 &amp; 2 \\
+    1 &amp; -2 &amp; 2 &amp; 3
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Se adicionamos 2 vezes a linha 3 de <span class="math notranslate nohighlight">\(A\)</span> à segunda linha de <span class="math notranslate nohighlight">\(A\)</span>, obtemos:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B = \begin{bmatrix}
+    1 &amp; 2 &amp; 4 &amp; 3 \\
+    4 &amp; -3 &amp; 7 &amp; 8 \\
+    1 &amp; -2 &amp; 2 &amp; 3
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Portanto, <span class="math notranslate nohighlight">\(B\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>.<br />
+Permutando as linhas 2 e 3, obtemos:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C = \begin{bmatrix}
+    1 &amp; 2 &amp; 4 &amp; 3 \\
+    1 &amp; -2 &amp; 2 &amp; 3 \\
+    4 &amp; -3 &amp; 7 &amp; 8
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Portanto, <span class="math notranslate nohighlight">\(C\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(B\)</span> e também é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>.<br />
+Multiplicando a linha 1 de <span class="math notranslate nohighlight">\(C\)</span> por 2, obtemos:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  D = \begin{bmatrix}
+    2 &amp; 4 &amp; 8 &amp; 6 \\
+    1 &amp; -2 &amp; 2 &amp; 3 \\
+    4 &amp; -3 &amp; 7 &amp; 8
+  \end{bmatrix}
+\end{split}\]</div>
+<p>Portanto, <span class="math notranslate nohighlight">\(D\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(C\)</span>.<br />
+Segue-se, então, que <span class="math notranslate nohighlight">\(D\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>, uma vez que obtivemos <span class="math notranslate nohighlight">\(D\)</span> aplicando três operações elementares sucessivas nas linhas de <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</div>
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota!</p>
+<p>Não é difícil mostrar que:</p>
+<ol class="arabic simple">
+<li><p>Toda matriz é equivalente por linhas a si mesma;</p></li>
+<li><p>Se <span class="math notranslate nohighlight">\(A\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(B\)</span>, então <span class="math notranslate nohighlight">\(B\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>;</p></li>
+<li><p>Se <span class="math notranslate nohighlight">\(A\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(B\)</span> e <span class="math notranslate nohighlight">\(B\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(C\)</span>, então <span class="math notranslate nohighlight">\(A\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(C\)</span>.</p></li>
+</ol>
+<p>Em 2, as afirmações “<span class="math notranslate nohighlight">\(A\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(B\)</span>” e “<span class="math notranslate nohighlight">\(B\)</span> é equivalente por linhas a <span class="math notranslate nohighlight">\(A\)</span>” podem ser substituídas por <strong>“<span class="math notranslate nohighlight">\(A\)</span> e <span class="math notranslate nohighlight">\(B\)</span> são equivalentes por linhas”</strong>.</p>
+</div>
+<div class="examples admonition">
+<p class="admonition-title">Exemplos 1.19</p>
+<p>Seja</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    0 &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    2 &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    2 &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p>O procedimento para a transformação de uma matriz para a forma escalonada por linhas está descrito a seguir.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 01</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Encontre a primeira coluna (da esquerda para a direita) não-nula de <span class="math notranslate nohighlight">\(A\)</span>. Esta coluna é chamada <strong>coluna do pivô</strong>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    \color{red}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    \color{red}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{red}{2} &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    \color{red}{2} &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 02</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique o primeiro elemento não-nulo (de cima para baixo) na coluna do pivô. Este elemento é chamado <strong>pivô</strong>, destacado em azul em <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A_{1} = \begin{bmatrix}
+    \color{red}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    \color{red}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{blue}{2} &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    \color{red}{2} &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 03</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Permute, se necessário, a primeira linha com a linha onde está o pivô de modo que o pivô esteja agora na primeira linha. Chame a nova matriz de <span class="math notranslate nohighlight">\(A_1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A = \begin{bmatrix}
+    \color{blue}{2} &amp; 2 &amp; -5 &amp; 2 &amp; 4 \\
+    \color{red}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{red}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\    
+    \color{red}{2} &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira e terceira linhas de <span class="math notranslate nohighlight">\(A\)</span> foram permutadas.</strong></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 04</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Multiplique a primeira linha de <span class="math notranslate nohighlight">\(A_1\)</span> pelo inverso do pivô. Dessa maneira, o elemento na primeira linha e coluna do pivô (onde o pivô está localizado) é agora igual a 1. Chame a nova matriz de <span class="math notranslate nohighlight">\(A_2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A_{2} = \begin{bmatrix}
+    \color{red}{1} &amp; \color{red}{1} &amp; \color{red}{-\frac{5}{2}} &amp; \color{red}{1} &amp; \color{red}{2} \\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    2 &amp; 0 &amp; -6 &amp; 9 &amp; 7 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira linha de <span class="math notranslate nohighlight">\(A_1\)</span> foi multiplicada por <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>.</strong></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 05</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Adicione múltiplos apropriados da primeira linha de <span class="math notranslate nohighlight">\(A_2\)</span> a todas as outras linhas para tornar todos os elementos da coluna do pivô, com exceção do elemento onde o pivô está localizado, iguais a zero. Dessa maneira, todos os elementos na coluna do pivô e linhas <span class="math notranslate nohighlight">\(2, 3, \dots, m\)</span> são iguais a zero. Chame a nova matriz de <span class="math notranslate nohighlight">\(A_3\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  A_{3} = \begin{bmatrix}
+    1 &amp; 1 &amp; -\frac{5}{2} &amp; 1 &amp; 2 \\
+    \color{blue}{0} &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{blue}{0} &amp; 2 &amp; 3 &amp; -4 &amp; 1\\
+    \color{red}{0} &amp; \color{red}{-2} &amp; \color{red}{-1} &amp; \color{red}{7} &amp; \color{red}{3} \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong><span class="math notranslate nohighlight">\(-2\)</span> vezes a primeira linha de <span class="math notranslate nohighlight">\(A_2\)</span> foi adicionada à sua quarta linha.</strong></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 06</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique <span class="math notranslate nohighlight">\(B\)</span> como a submatriz <span class="math notranslate nohighlight">\((m - 1) \times n\)</span> de <span class="math notranslate nohighlight">\(A_3\)</span>, obtida retirando-se a primeira linha de <span class="math notranslate nohighlight">\(A_3\)</span>. Repita os Passos 1 até 5 em <span class="math notranslate nohighlight">\(B\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    0 &amp; \color{red}{0} &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; \color{blue}{2} &amp; 3 &amp; -4 &amp; 1\\
+    0 &amp; \color{red}{-2} &amp; -1 &amp; 7 &amp; 3 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira e segunda linhas de <span class="math notranslate nohighlight">\(B\)</span> foram permutadas.</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B_{1} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    0 &amp; \color{blue}{2} &amp; 3 &amp; -4 &amp; 1\\
+    0 &amp; \color{red}{0} &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; \color{red}{-2} &amp; -1 &amp; 7 &amp; 3 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira linha de <span class="math notranslate nohighlight">\(B_{1}\)</span> foi multiplicada por <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span></strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B_{2} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{red}{0} &amp; \color{blue}{1} &amp; \color{red}{\frac{3}{2}} &amp; \color{red}{-2} &amp; \color{red}{\frac{1}{2}}\\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    0 &amp; -2 &amp; -1 &amp; 7 &amp; 3 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong><span class="math notranslate nohighlight">\(2\)</span> vezes a primeira linha de <span class="math notranslate nohighlight">\(B_{2}\)</span> foi adicionada à sua terceira linha</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  B_{3} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    0 &amp; 1 &amp; \frac{3}{2} &amp; -2 &amp; \frac{1}{2}\\
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+    \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{2} &amp; \color{red}{3} &amp; \color{red}{4} \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 07</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique <span class="math notranslate nohighlight">\(C\)</span> como a submatriz <span class="math notranslate nohighlight">\((m - 2) \times n\)</span> de <span class="math notranslate nohighlight">\(B_3\)</span>, obtida retirando-se a primeira linha de <span class="math notranslate nohighlight">\(B_3\)</span>. Repita os Passos 1 até 5 em <span class="math notranslate nohighlight">\(C\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    0 &amp; 0 &amp; \color{blue}{2} &amp; 3 &amp; 4 \\    
+    0 &amp; 0 &amp; \color{red}{2} &amp; 3 &amp; 4 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong>A primeira linha de <span class="math notranslate nohighlight">\(C\)</span> foi multiplicada por <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span></strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C_{1} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{1} &amp; \color{red}{\frac{3}{2}} &amp; \color{red}{2} \\    
+    0 &amp; 0 &amp; 2 &amp; 3 &amp; 4 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text"><strong><span class="math notranslate nohighlight">\((-2)\)</span> vezes a primeira linha de <span class="math notranslate nohighlight">\(C1\)</span> foi adiciona à sua segunda linha.</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  C_{2} = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    0 &amp; 0 &amp; 1 &amp; \frac{3}{2} &amp; 2 \\    
+    \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{0} &amp; \color{red}{0} \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Passo 08</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Identifique <span class="math notranslate nohighlight">\(D\)</span> como a submatriz <span class="math notranslate nohighlight">\((m - 3) \times n\)</span> de <span class="math notranslate nohighlight">\(C_2\)</span>, obtida retirando-se a primeira linha de <span class="math notranslate nohighlight">\(C_2\)</span>. Tentamos repetir os Passos de 1 até 5 em <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  D = \begin{bmatrix}
+    \color{lightgray}{1} &amp; \color{lightgray}{1} &amp; \color{lightgray}{-\frac{5}{2}} &amp; \color{lightgray}{1} &amp; \color{lightgray}{2} \\
+    \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{-2} &amp; \color{lightgray}{\frac{1}{2}}\\
+    \color{lightgray}{0} &amp; \color{lightgray}{0} &amp; \color{lightgray}{1} &amp; \color{lightgray}{\frac{3}{2}} &amp; \color{lightgray}{2} \\    
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+<p class="sd-card-text">Entretanto, como não há linha do pivô em <span class="math notranslate nohighlight">\(D\)</span>, concluímos o processo. A matriz, representada por <span class="math notranslate nohighlight">\(H\)</span>, abrange <span class="math notranslate nohighlight">\(D\)</span> e as linhas em cinza acima de <span class="math notranslate nohighlight">\(D\)</span>, na forma escalonada por linhas.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  H = \begin{bmatrix}
+    1 &amp; 1 &amp; -\frac{5}{2} &amp; 1 &amp; 2 \\
+    0 &amp; 1 &amp; \frac{3}{2} &amp; -2 &amp; \frac{1}{2}\\
+    0 &amp; 0 &amp; 1 &amp; \frac{3}{2} &amp; 2 \\    
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+  \end{bmatrix}.
+\end{split}\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Dica!</p>
+<p>Quando estivermos realizando os cálculos, muitas vezes é possível evitar frações modificando de maneira apropriada os passos do procedimento.</p>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./section_01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="topic_1.3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Produto Escalar e Multiplicação de Matrizes</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forma-escalonada-reduzida-por-linhas">Forma Escalonada Reduzida por Linhas</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rafael Fogarolli Vieira
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
